@@ -10,7 +10,7 @@ model = joblib.load("../model/model.joblib")
 
 @app.route("/")
 def home():
-    return "Hello Dev! Flask is running"
+    return "Flask is running"
 
 @app.route("/predict",methods=["POST"])
 def predict():
