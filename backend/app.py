@@ -2,11 +2,13 @@ from flask import Flask, request, jsonify
 import joblib
 import numpy as np
 from flask_cors import CORS
+import os
 
 app = Flask(__name__)
 CORS(app)
 
-model = joblib.load("../model/model.joblib")
+model_path = os.path.join(os.path.dirname(__file__), "model", "model.joblib")
+model = joblib.load(model_path)
 
 @app.route("/")
 def home():
