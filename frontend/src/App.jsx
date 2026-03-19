@@ -27,22 +27,29 @@ function App() {
     });
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+const [loading, setLoading] = useState(false);
 
-    const response = await fetch(`${import.meta.env.VITE_API_URL}predict`, {
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  setLoading(true);
+
+  try {
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/predict`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
       },
-      body: JSON.stringify({
-        features: formData
-      })
+      body: JSON.stringify({ features: formData })
     });
 
     const data = await response.json();
     alert(`Predicted Price: ${data.prediction}`);
-  };
+  } catch (err) {
+    alert("Something went wrong!");
+  }
+
+  setLoading(false);
+};
 
   return (
     <>
@@ -138,9 +145,10 @@ function App() {
 
           <button
             type="submit"
+            disabled={loading}
             className="mt-6 w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700"
           >
-            Submit
+            {loading ? "Predicting..." : "Submit"}
           </button>
 
         </form>
