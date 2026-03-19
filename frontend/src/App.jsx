@@ -27,35 +27,42 @@ function App() {
     });
   };
 
-const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-const handleSubmit = async (e) => {
-  e.preventDefault();
-  setLoading(true);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
 
-  try {
-    const response = await fetch(`${import.meta.env.VITE_API_URL}/predict`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({ features: formData })
-    });
+    try {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/predict`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ features: formData })
+      });
 
-    const data = await response.json();
-    alert(`Predicted Price: ${data.prediction}`);
-  } catch (err) {
-    alert("Something went wrong!");
-  }
+      console.log("Status:", response.status);
 
-  setLoading(false);
-};
+      const text = await response.text();
+      console.log("Raw response:", text);
+
+      const data = JSON.parse(text);
+
+      alert(`Predicted Price: ${data.prediction}`);
+    } catch (err) {
+      console.error(err);
+      alert("Error: " + err.message);
+    }
+
+    setLoading(false);
+  };
 
   return (
     <>
       <div className="min-h-screen bg-gray-100 flex items-center justify-center p-6 bg-[url(https://images.unsplash.com/photo-1564013799919-ab600027ffc6?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80)] bg-cover">
         <form onSubmit={handleSubmit} className="bg-white/85 shadow-lg rounded-xl p-8 w-full max-w-4xl">
-          
+
           <h1 className="text-2xl font-bold text-center mb-6">
             House Price Prediction Form
           </h1>
@@ -64,27 +71,27 @@ const handleSubmit = async (e) => {
 
             <div>
               <label>Number of Bedrooms</label>
-              <input type="number" name="bedrooms" onChange={handleChange} className="w-full border p-2 rounded"/>
+              <input type="number" name="bedrooms" onChange={handleChange} className="w-full border p-2 rounded" />
             </div>
 
             <div>
               <label>Number of Bathrooms</label>
-              <input type="number" name="bathrooms" onChange={handleChange} className="w-full border p-2 rounded"/>
+              <input type="number" name="bathrooms" onChange={handleChange} className="w-full border p-2 rounded" />
             </div>
 
             <div>
               <label>Living Area</label>
-              <input type="number" name="living_area" onChange={handleChange} className="w-full border p-2 rounded"/>
+              <input type="number" name="living_area" onChange={handleChange} className="w-full border p-2 rounded" />
             </div>
 
             <div>
               <label>Lot Area</label>
-              <input type="number" name="lot_area" onChange={handleChange} className="w-full border p-2 rounded"/>
+              <input type="number" name="lot_area" onChange={handleChange} className="w-full border p-2 rounded" />
             </div>
 
             <div>
               <label>Number of Floors</label>
-              <input type="number" name="floors" onChange={handleChange} className="w-full border p-2 rounded"/>
+              <input type="number" name="floors" onChange={handleChange} className="w-full border p-2 rounded" />
             </div>
 
             <div>
@@ -98,47 +105,47 @@ const handleSubmit = async (e) => {
 
             <div>
               <label>Number of Views</label>
-              <input type="number" name="views" onChange={handleChange} className="w-full border p-2 rounded"/>
+              <input type="number" name="views" onChange={handleChange} className="w-full border p-2 rounded" />
             </div>
 
             <div>
               <label>Area of the House (excluding basement)</label>
-              <input type="number" name="area_without_basement" onChange={handleChange} className="w-full border p-2 rounded"/>
+              <input type="number" name="area_without_basement" onChange={handleChange} className="w-full border p-2 rounded" />
             </div>
 
             <div>
               <label>Area of the Basement</label>
-              <input type="number" name="basement_area" onChange={handleChange} className="w-full border p-2 rounded"/>
+              <input type="number" name="basement_area" onChange={handleChange} className="w-full border p-2 rounded" />
             </div>
 
             <div>
               <label>Renovation Year</label>
-              <input type="number" name="renovation_year" onChange={handleChange} className="w-full border p-2 rounded"/>
+              <input type="number" name="renovation_year" onChange={handleChange} className="w-full border p-2 rounded" />
             </div>
 
             <div>
               <label>Living Area Renovated</label>
-              <input type="number" name="living_area_renov" onChange={handleChange} className="w-full border p-2 rounded"/>
+              <input type="number" name="living_area_renov" onChange={handleChange} className="w-full border p-2 rounded" />
             </div>
 
             <div>
               <label>Lot Area Renovated</label>
-              <input type="number" name="lot_area_renov" onChange={handleChange} className="w-full border p-2 rounded"/>
+              <input type="number" name="lot_area_renov" onChange={handleChange} className="w-full border p-2 rounded" />
             </div>
 
             <div>
               <label>Number of Schools Nearby</label>
-              <input type="number" name="schools_nearby" onChange={handleChange} className="w-full border p-2 rounded"/>
+              <input type="number" name="schools_nearby" onChange={handleChange} className="w-full border p-2 rounded" />
             </div>
 
             <div>
               <label>Distance from Airport</label>
-              <input type="number" name="airport_distance" onChange={handleChange} className="w-full border p-2 rounded"/>
+              <input type="number" name="airport_distance" onChange={handleChange} className="w-full border p-2 rounded" />
             </div>
 
             <div>
               <label>Age of the House (Old)</label>
-              <input type="number" name="old" onChange={handleChange} className="w-full border p-2 rounded"/>
+              <input type="number" name="old" onChange={handleChange} className="w-full border p-2 rounded" />
             </div>
 
           </div>
